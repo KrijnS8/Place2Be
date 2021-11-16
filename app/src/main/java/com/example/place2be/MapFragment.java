@@ -1,6 +1,7 @@
 package com.example.place2be;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,6 +26,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
     private static final String TAG = MapFragment.class.getSimpleName();
     private final Context mainContext;
+    private GoogleMap mMap;
 
     public MapFragment(Context mainContext) {
         this.mainContext = mainContext;
@@ -50,10 +53,24 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         // When map is loaded
-        LocationTracker locationTracker = new LocationTracker(mainContext);
-        locationTracker.updateLocation((latitude, longitude) -> googleMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude))));
+        mMap = googleMap;
 
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        // Sets style of map
+        try {
+            boolean isSucces = googleMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(mainContext, R.raw.style_map));
+            if (!isSucces) {
+                Toast.makeText(mainContext, "Maps style loads failed", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Resources.NotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        // Moves camera to current location
+        LocationTracker locationTracker = new LocationTracker(mainContext);
+        locationTracker.updateLocation((latitude, longitude) -> mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude))));
+
+        // Adds ClickListener event to add marker on click location
+        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
             public void onMapClick(@NonNull LatLng latLng) {
                 // Initialize marker options
@@ -63,11 +80,11 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                 // Set title of marker
                 markerOptions.title(latLng.latitude + " : " + latLng.longitude);
                 // Remove all markers
-                googleMap.clear();
+                mMap.clear();
                 // Animate to zoom marker
-                googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                 // Add marker on map
-                googleMap.addMarker(markerOptions);
+                mMap.addMarker(markerOptions);
             }
         });
     }

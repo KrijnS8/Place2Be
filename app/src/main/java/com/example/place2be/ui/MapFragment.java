@@ -1,4 +1,4 @@
-package com.example.place2be;
+package com.example.place2be.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -7,19 +7,23 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.place2be.models.GroupLocation;
+import com.example.place2be.services.LocationTracker;
+import com.example.place2be.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.ui.IconGenerator;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback {
@@ -27,6 +31,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = MapFragment.class.getSimpleName();
     private final Context mainContext;
     private GoogleMap mMap;
+    private GroupLocation groupLocation;
 
     public MapFragment(Context mainContext) {
         this.mainContext = mainContext;
@@ -67,25 +72,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         // Moves camera to current location
         LocationTracker locationTracker = new LocationTracker(mainContext);
-        locationTracker.updateLocation((latitude, longitude) -> mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude))));
-
-        // Adds ClickListener event to add marker on click location
-        mMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+        locationTracker.updateLocation(new LocationTracker.LocationReceivedCallback() {
             @Override
-            public void onMapClick(@NonNull LatLng latLng) {
-                // Initialize marker options
-                MarkerOptions markerOptions = new MarkerOptions();
-                // Set position of marker
-                markerOptions.position(latLng);
-                // Set title of marker
-                markerOptions.title(latLng.latitude + " : " + latLng.longitude);
-                // Remove all markers
-                mMap.clear();
-                // Animate to zoom marker
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
-                // Add marker on map
-                mMap.addMarker(markerOptions);
+            public void onLocationReceived(double latitude, double longitude) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
+                addMarker(latitude, longitude);
             }
         });
+    }
+
+    private void addMarker(double latitude, double longitude) {
+        groupLocation = new GroupLocation(mainContext, mMap, latitude, longitude);
     }
 }

@@ -1,4 +1,4 @@
-package com.example.place2be;
+package com.example.place2be.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,9 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import java.sql.SQLOutput;
+import com.example.place2be.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,16 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Request location permission
         requestLocationPermission();
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults[0] == 0) {
-            createMap();
-        } else {
-            requestLocationPermission();
-        }
     }
 
     private void createMap() {
@@ -53,6 +42,16 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE_LOCATION_PERMISSION);
         } else {
             createMap();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_LOCATION_PERMISSION && grantResults[0] == 0) {
+            createMap();
+        } else {
+            requestLocationPermission();
         }
     }
 }

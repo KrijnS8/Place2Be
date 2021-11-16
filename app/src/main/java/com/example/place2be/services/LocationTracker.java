@@ -1,4 +1,4 @@
-package com.example.place2be;
+package com.example.place2be.services;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -21,7 +21,6 @@ public class LocationTracker extends AppCompatActivity {
     }
 
     public void updateLocation(LocationReceivedCallback locationReceivedCallback) {
-        // Checks for necessary permissions
         this.locationReceivedCallback = locationReceivedCallback;
         updateLatLng();
     }
@@ -45,13 +44,13 @@ public class LocationTracker extends AppCompatActivity {
                             int latestLocationIndex = locationResult.getLocations().size() - 1;
                             double latitude = locationResult.getLocations().get(latestLocationIndex).getLatitude();
                             double longitude = locationResult.getLocations().get(latestLocationIndex).getLongitude();
-                            locationReceivedCallback.updateCamera(latitude, longitude);
+                            locationReceivedCallback.onLocationReceived(latitude, longitude);
                         }
                     }
                 }, Looper.getMainLooper());
     }
 
     public interface LocationReceivedCallback {
-        void updateCamera(double latitude, double longitude);
+        void onLocationReceived(double latitude, double longitude);
     }
 }

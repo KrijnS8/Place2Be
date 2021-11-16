@@ -50,8 +50,8 @@ public class GroupLocation implements GoogleMap.OnMarkerClickListener {
     @Override
     public boolean onMarkerClick(final Marker marker) {
         // When marker gets clicked
-        if (marker.equals(marker)) {
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 18f),200,null);
+        if (this.marker.equals(marker)) {
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude), 16f),200,null);
             Toast.makeText(mainContext, latitude + " : " + longitude, Toast.LENGTH_SHORT).show();
         }
         return true;

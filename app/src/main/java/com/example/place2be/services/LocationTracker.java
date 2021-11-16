@@ -14,19 +14,13 @@ import com.google.android.gms.location.LocationServices;
 public class LocationTracker extends AppCompatActivity {
 
     private final Context mainContext;
-    private LocationReceivedCallback locationReceivedCallback;
 
     public LocationTracker(Context mainContext) {
         this.mainContext = mainContext;
     }
 
-    public void updateLocation(LocationReceivedCallback locationReceivedCallback) {
-        this.locationReceivedCallback = locationReceivedCallback;
-        updateLatLng();
-    }
-
     @SuppressLint("MissingPermission")
-    private void updateLatLng() {
+    public void getLatLng(LocationReceivedCallback locationReceivedCallback) {
         // Creates location request
         LocationRequest locationRequest = LocationRequest.create()
                 .setInterval(1000)

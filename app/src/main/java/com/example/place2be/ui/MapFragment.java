@@ -30,7 +30,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     private static final String TAG = MapFragment.class.getSimpleName();
     private final Context mainContext;
     private GoogleMap mMap;
-    private final Hashtable<String, GroupLocation> groupLocationHashtable = new Hashtable<String, GroupLocation>();
+    private final Hashtable<String, GroupLocation> groupLocationHashtable = new Hashtable<>();
 
     public MapFragment(Context mainContext) {
         this.mainContext = mainContext;
@@ -71,16 +71,15 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
 
         // Moves camera to current location
         LocationTracker locationTracker = new LocationTracker(mainContext);
-        locationTracker.updateLocation(new LocationTracker.LocationReceivedCallback() {
+        locationTracker.getLatLng(new LocationTracker.LocationReceivedCallback() {
             @Override
             public void onLocationReceived(double latitude, double longitude) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-                addGroupLocation(latitude, longitude, Double.toString(latitude) + longitude);
             }
         });
     }
 
-    private void addGroupLocation(double latitude, double longitude, String key) {
+    public void addGroupLocation(double latitude, double longitude, String key) {
         // Checks if key already exists
         if (groupLocationHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key already in use!");
@@ -91,7 +90,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
         groupLocationHashtable.get(key).setMarker();
     }
 
-    private void removeGroupLocation(String key) {
+    public void removeGroupLocation(String key) {
         // Checks if key exists
         if (!groupLocationHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key not found");

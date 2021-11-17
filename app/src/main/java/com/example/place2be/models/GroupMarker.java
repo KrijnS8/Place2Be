@@ -28,7 +28,7 @@ public class GroupMarker extends MapMarker {
         IconGenerator iconGen = new IconGenerator(mainContext);
         iconGen.setBackground(mainContext.getResources().getDrawable(R.drawable.group_marker_background));
         iconGen.setTextAppearance(R.style.GroupMarkerStyle);
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconGen.makeIcon(Integer.toString(population))))
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconGen.makeIcon("G")))
                 .position(new LatLng(latitude, longitude)).anchor(iconGen.getAnchorU(), iconGen.getAnchorV());
 
         marker = mMap.addMarker(markerOptions);

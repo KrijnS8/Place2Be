@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -42,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         locationTracker.getLatLng(new LocationTracker.LocationReceivedCallback() {
             @Override
             public void onLocationReceived(double latitude, double longitude) {
-                mapFragment.addGroupLocation(latitude, longitude, latitude + ":" + longitude);
+                mapFragment.addPersonalMarker(52.055279697855504, 4.490693069796051, "p");
+                mapFragment.addGroupMarker(latitude, longitude, "g");
+                mapFragment.addPersonalMarker(52.04361437713596, 4.539530732068769, "p2");
             }
         });
     }

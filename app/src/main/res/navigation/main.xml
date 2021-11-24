@@ -14,4 +14,29 @@
         android:name="com.example.place2be.ui.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/menu_messages"
+        android:name="com.example.place2be.ui.MessagesFragment"
+        android:label="fragment_messages"
+        tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/menu_add_wristband"
+        android:name="com.example.place2be.ui.AddWristbandFragment"
+        android:label="fragment_add_wristband"
+        tools:layout="@layout/fragment_add_wristband" />
+    <fragment
+        android:id="@+id/menu_settings"
+        android:name="com.example.place2be.ui.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/menu_customer_support"
+        android:name="com.example.place2be.ui.CustomerSupportFragment"
+        android:label="fragment_customer_support"
+        tools:layout="@layout/fragment_customer_support" />
+    <fragment
+        android:id="@+id/menu_logout"
+        android:name="com.example.place2be.ui.LogoutFragment"
+        android:label="fragment_logout"
+        tools:layout="@layout/fragment_logout" />
 </navigation>

@@ -36,7 +36,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private final Hashtable<String, GroupMarker> groupMarkerHashtable = new Hashtable<>();
     private final Hashtable<String, PersonalMarker> personalMarkerHashtable = new Hashtable<>();
 
-    public MapFragment() {}
+    public MapFragment() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

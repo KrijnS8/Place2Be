@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.example.place2be.R;
 
-public class ProfileFragment extends Fragment {
+public class CustomerSupportFragment extends Fragment {
 
-    public ProfileFragment() {
+    public CustomerSupportFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Initialize view
-        View view = inflater.inflate(R.layout.fragment_profile, container, false);
+        View view = inflater.inflate(R.layout.fragment_customer_support, container, false);
 
         // Return view
         return view;

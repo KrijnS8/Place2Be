@@ -24,4 +24,7 @@
     <string name="general">General</string>
     <string name="work_in_progress">Work In Progress</string>
     <string name="add_group">Add Group</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="add_group_marker">Add group marker?</string>
 </resources>

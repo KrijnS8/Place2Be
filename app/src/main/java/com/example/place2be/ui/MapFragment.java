@@ -1,7 +1,10 @@
 package com.example.place2be.ui;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.place2be.R;
@@ -56,6 +60,31 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         // Async map
         supportMapFragment.getMapAsync(this);
 
+        Button addGroupButton = (Button) view.findViewById(R.id.add_group_button);
+
+        addGroupButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                GroupDialog dialog = new GroupDialog(mainContext);
+                dialog.setListener(new GroupDialog.GroupDialogListener() {
+                    @Override
+                    public void onDialogResult(boolean result) {
+                        if (result) {
+                            LocationTracker locationTracker = new LocationTracker(mainContext);
+                            locationTracker.getLatLng(new LocationReceivedCallback() {
+                                @Override
+                                public void onLocationReceived(double latitude, double longitude) {
+                                    addGroupMarker(latitude, longitude, latitude + ":" + longitude);
+                                }
+                            });
+                        }
+                        dialog.dismiss();
+                    }
+                });
+            }
+        });
+
         // Return view
         return view;
     }
@@ -84,7 +113,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             @Override
             public void onLocationReceived(double latitude, double longitude) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-                addPersonalMarker(latitude, longitude, "p");
+                //addPersonalMarker(latitude, longitude, "p");
             }
         });
         addGroupMarker(52.04361437713596, 4.539530732068769, "g1");

@@ -1,4 +1,4 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main.fragments;
 
 import android.os.Bundle;
 

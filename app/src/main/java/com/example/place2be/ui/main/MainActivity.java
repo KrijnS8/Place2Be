@@ -1,4 +1,4 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,17 +7,19 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.Manifest;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.place2be.R;
-import com.example.place2be.services.LocationTracker;
+import com.example.place2be.ui.authentication.SignInActivity;
+import com.example.place2be.ui.main.fragments.MapFragment;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +32,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        openLoginActivity();
+
+        // Request login status
+        if (!requestLoginStatus()) {
+
+        }
 
         // Request location permission
         requestLocationPermission();
@@ -53,6 +62,27 @@ public class MainActivity extends AppCompatActivity {
                 drawerLayout.openDrawer(GravityCompat.START);
             }
         });
+    }
+
+    private boolean requestLoginStatus() {
+        // Opens shared preferences file "Login"
+        SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+
+        // Checks if access already true
+        if (!sp.getBoolean("access", false)) {
+            ed.putBoolean("access", false);
+            ed.putString("username", null);
+            ed.apply();
+            return false;
+        }
+        return true;
+    }
+
+    private void openLoginActivity() {
+        // Opens login activity
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
     }
 
     private void requestLocationPermission() {

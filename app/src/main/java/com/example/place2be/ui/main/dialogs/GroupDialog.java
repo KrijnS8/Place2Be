@@ -1,4 +1,4 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;

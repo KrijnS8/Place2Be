@@ -11,10 +11,20 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/MainTheme">
+        android:supportsRtl="true">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.authentication.SignInActivity"
+            android:theme="@style/SignInTheme"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.authentication.SignUpActivity"
+            android:theme="@style/SignInTheme"
+            android:exported="false"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:theme="@style/MainTheme"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

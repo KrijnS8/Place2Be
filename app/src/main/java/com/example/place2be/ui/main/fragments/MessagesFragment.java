@@ -1,4 +1,4 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main.fragments;
 
 import android.os.Bundle;
 
@@ -7,13 +7,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.place2be.R;
 
-public class LogoutFragment extends Fragment {
+public class MessagesFragment extends Fragment {
 
-    public LogoutFragment() {
+    public MessagesFragment() {
         // Required empty public constructor
     }
 
@@ -26,7 +25,7 @@ public class LogoutFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Initialize view
-        View view = inflater.inflate(R.layout.fragment_logout, container, false);
+        View view = inflater.inflate(R.layout.fragment_messages, container, false);
 
         // Return view
         return view;

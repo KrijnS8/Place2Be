@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.authentication.SignInActivity"
+    android:background="@color/eton_blue">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/login_box_shape"
+            android:transitionName="loginBoxShapeTransition"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="280dp"
+            android:background="@drawable/login_box">
+
+            <LinearLayout
+                android:id="@+id/login_box_functionality"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/login_box"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/dark_lava"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="Welcome!"/>
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_lava"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    android:text="Please sign in to continue."/>
+
+                <EditText
+                    android:id="@+id/email_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/email_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="@string/email_hint"
+                    android:textColorHint="@color/gray"
+                    tools:targetApi="m" />
+
+                <EditText
+                    android:id="@+id/password_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="@string/password"
+                    android:textColorHint="@color/gray"/>
+
+                <Button
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/sign_in_button"
+                    android:text="LOGIN"
+                    android:textColor="@color/dark_lava"/>
+
+                <TextView
+                    android:id="@+id/sign_up_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/eton_blue"
+                    android:textSize="15dp"
+                    android:text="Don't have an acount yet?" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/logo_icon"
+            android:transitionName="logoTransition"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/map"
+            app:tint="@color/beige"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/app_name"
+            android:transitionName="appNameTransition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="@string/place2be"
+            android:textColor="@color/beige"
+            android:textSize="50sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

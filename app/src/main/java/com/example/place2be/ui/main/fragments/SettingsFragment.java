@@ -1,4 +1,4 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main.fragments;
 
 import android.os.Bundle;
 
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.example.place2be.R;
 
-public class AddWristbandFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    public AddWristbandFragment() {
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
@@ -25,7 +25,7 @@ public class AddWristbandFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Initialize view
-        View view = inflater.inflate(R.layout.fragment_add_wristband, container, false);
+        View view = inflater.inflate(R.layout.fragment_settings, container, false);
 
         // Return view
         return view;

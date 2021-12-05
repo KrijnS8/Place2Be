@@ -1,10 +1,7 @@
-package com.example.place2be.ui;
+package com.example.place2be.ui.main.fragments;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +18,7 @@ import com.example.place2be.models.GroupMarker;
 import com.example.place2be.models.PersonalMarker;
 import com.example.place2be.services.LocationTracker;
 import com.example.place2be.services.LocationTracker.LocationReceivedCallback;
+import com.example.place2be.ui.main.dialogs.GroupDialog;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;

@@ -76,10 +76,12 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                                 @Override
                                 public void onLocationReceived(double latitude, double longitude) {
                                     addGroupMarker(latitude, longitude, latitude + ":" + longitude);
+                                    dialog.dismiss();
                                 }
                             });
+                        } else {
+                            dialog.dismiss();
                         }
-                        dialog.dismiss();
                     }
                 });
             }
@@ -113,9 +115,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             @Override
             public void onLocationReceived(double latitude, double longitude) {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(latitude, longitude)));
-                //addPersonalMarker(latitude, longitude, "p");
             }
         });
+
         addGroupMarker(52.04361437713596, 4.539530732068769, "g1");
         addGroupMarker(52.055279697855504, 4.490693069796051, "g2");
     }

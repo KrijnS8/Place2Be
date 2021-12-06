@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        openLoginActivity();
-
         // Request login status
         if (!requestLoginStatus()) {
-
+            openLoginActivity();
         }
 
         // Request location permission

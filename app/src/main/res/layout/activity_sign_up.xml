@@ -13,15 +13,90 @@
         android:gravity="center">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/sign_up_box"
-            android:transitionName="login_box_shape_transition"
+            android:id="@+id/login_box_shape"
+            android:transitionName="loginBoxShapeTransition"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/login_box"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
+            android:layout_marginTop="280dp"
+            android:background="@drawable/login_box">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="50dp"
+                    android:textColor="@color/dark_lava"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:text="Create account"/>
+
+                <TextView
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/dark_lava"
+                    android:textSize="15sp"
+                    android:textStyle="italic"
+                    android:text="Please enter all fields to continue."/>
+
+                <EditText
+                    android:id="@+id/email_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="Full name"
+                    android:textColorHint="@color/gray" />
+
+                <EditText
+                    android:id="@+id/sign_up_email_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/email_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="Email address"
+                    android:inputType="textEmailAddress"
+                    android:textColorHint="@color/gray" />
+
+                <EditText
+                    android:id="@+id/sign_up_password_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/password_icon"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    android:textColorHint="@color/gray" />
+
+                <Button
+                    android:id="@+id/sign_in_button"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/sign_in_button"
+                    android:text="SIGN UP"
+                    android:textColor="@color/dark_lava"/>
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -32,7 +107,7 @@
             android:layout_height="100dp"
             android:layout_marginTop="50dp"
             android:src="@drawable/map"
-            app:tint="@color/dark_lava"
+            app:tint="@color/beige"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -44,7 +119,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="150dp"
             android:text="@string/place2be"
-            android:textColor="@color/dark_lava"
+            android:textColor="@color/beige"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

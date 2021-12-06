@@ -3,6 +3,7 @@ package com.example.place2be.ui.authentication;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Layout;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,13 +26,10 @@ import com.example.place2be.ui.main.MainActivity;
 
 public class SignInActivity extends Activity {
 
+    private EditText email;
+    private EditText password;
     private Button signInButton;
     private TextView signUpText;
-
-    private ImageView logoIcon;
-    private TextView appName;
-    private ConstraintLayout loginBoxShape;
-    private LinearLayout loginBoxFunctionality;
 
     public SignInActivity() {}
 
@@ -41,10 +40,30 @@ public class SignInActivity extends Activity {
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_sign_in);
 
+        email = (EditText) findViewById(R.id.email_box);
+        password = (EditText) findViewById(R.id.password_box);
+
         signInButton = (Button) findViewById(R.id.sign_in_button);
+        signInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (email.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
+                    SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+                    SharedPreferences.Editor ed = sp.edit();
+
+                    ed.putBoolean("access", true);
+                    ed.apply();
+
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+            }
+        });
 
         signUpText = (TextView) findViewById(R.id.sign_up_text);
         signUpText.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onClick(View v) {
                 // Starts sign up activity
@@ -52,11 +71,6 @@ public class SignInActivity extends Activity {
                 startActivity(intent);
             }
         });
-
-        logoIcon = (ImageView) findViewById(R.id.logo_icon);
-        appName = (TextView) findViewById(R.id.app_name);
-        loginBoxShape = (ConstraintLayout) findViewById(R.id.login_box_shape);
-        loginBoxFunctionality = (LinearLayout) findViewById(R.id.login_box_functionality);
     }
 
     @Override

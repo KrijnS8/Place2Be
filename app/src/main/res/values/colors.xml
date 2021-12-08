@@ -8,7 +8,9 @@
     <color name="olive">#433E0E</color>
     <color name="dark_lava">#4A4238</color>
     <color name="eton_blue">#86BAA1</color>
+    <color name="eton_blue_shadow">#6dac8e</color>
     <color name="beige">#EDEAD0</color>
     <color name="maize_crayola">#FFCF56</color>
     <color name="gray">#808080</color>
+    <color name="translucent_black">#4D000000</color>
 </resources>

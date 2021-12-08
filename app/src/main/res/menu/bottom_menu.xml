@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/messagesFragment"
+        android:icon="@drawable/messages"
+        android:title="@string/messages"/>
+    <item
+        android:id="@+id/mapFragment"
+        android:icon="@drawable/map"
+        android:title="@string/map"/>
+    <item
+        android:id="@+id/profileFragment"
+        android:icon="@drawable/profile"
+        android:title="@string/profile"/>
+</menu>

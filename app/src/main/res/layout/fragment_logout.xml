@@ -4,5 +4,5 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/eton_blue"
-    tools:context=".ui.main.fragments.LogoutFragment">
+    tools:context="nl.krijnschelvis.place2be.ui.main.fragments.LogoutFragment">
 </FrameLayout>

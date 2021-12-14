@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.place2be">
+    package="nl.krijnschelvis.place2be">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -13,19 +13,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".ui.authentication.SignInActivity"
+            android:name="nl.krijnschelvis.place2be.ui.authentication.SignInActivity"
             android:theme="@style/SignInTheme"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
         <activity
-            android:name=".ui.authentication.SignUpActivity"
+            android:name="nl.krijnschelvis.place2be.ui.authentication.SignUpActivity"
             android:theme="@style/SignInTheme"
             android:exported="false"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name="nl.krijnschelvis.place2be.ui.main.MainActivity"
             android:theme="@style/MainTheme"
             android:exported="true"
             android:label="@string/app_name"

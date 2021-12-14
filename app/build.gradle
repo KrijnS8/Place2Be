@@ -7,7 +7,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        applicationId "com.example.place2be"
+        applicationId "nl.krijnschelvis.place2be"
         minSdkVersion 19
         targetSdkVersion 31
         versionCode 1

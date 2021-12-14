@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.authentication.SignInActivity"
+    tools:context="nl.krijnschelvis.place2be.ui.authentication.SignInActivity"
     android:background="@drawable/background_gradiant">
 
     <androidx.constraintlayout.widget.ConstraintLayout

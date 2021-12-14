@@ -6,37 +6,37 @@
     app:startDestination="@id/menu_map">
     <fragment
         android:id="@+id/menu_map"
-        android:name="com.example.place2be.ui.main.fragments.MapFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/menu_profile"
-        android:name="com.example.place2be.ui.main.fragments.ProfileFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/menu_messages"
-        android:name="com.example.place2be.ui.main.fragments.MessagesFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.MessagesFragment"
         android:label="fragment_messages"
         tools:layout="@layout/fragment_messages" />
     <fragment
         android:id="@+id/menu_add_wristband"
-        android:name="com.example.place2be.ui.main.fragments.AddWristbandFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.AddWristbandFragment"
         android:label="fragment_add_wristband"
         tools:layout="@layout/fragment_add_wristband" />
     <fragment
         android:id="@+id/menu_settings"
-        android:name="com.example.place2be.ui.main.fragments.SettingsFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/menu_customer_support"
-        android:name="com.example.place2be.ui.main.fragments.CustomerSupportFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.CustomerSupportFragment"
         android:label="fragment_customer_support"
         tools:layout="@layout/fragment_customer_support" />
     <fragment
         android:id="@+id/menu_logout"
-        android:name="com.example.place2be.ui.main.fragments.LogoutFragment"
+        android:name="nl.krijnschelvis.place2be.ui.main.fragments.LogoutFragment"
         android:label="fragment_logout"
         tools:layout="@layout/fragment_logout" />
 </navigation>

@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         // Setup navigation controller
         BottomNavigationView navigationView = findViewById(R.id.bottom_nav_view);
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
         NavigationUI.setupWithNavController(navigationView, navController);
 

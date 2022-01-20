@@ -2,6 +2,8 @@ package nl.krijnschelvis.place2be.ui.main.fragments;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,10 +16,18 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import nl.krijnschelvis.place2be.R;
-import nl.krijnschelvis.place2be.models.GroupMarker;
-import nl.krijnschelvis.place2be.models.PersonalMarker;
+import nl.krijnschelvis.place2be.network.models.Gathering;
+import nl.krijnschelvis.place2be.network.repositories.GatheringRepository;
+import nl.krijnschelvis.place2be.ui.main.components.GroupMarker;
+import nl.krijnschelvis.place2be.ui.main.components.PersonalMarker;
 import nl.krijnschelvis.place2be.services.LocationTracker;
 import nl.krijnschelvis.place2be.ui.main.dialogs.GroupDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,6 +37,8 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 
 import java.util.Hashtable;
+import java.util.List;
+import java.util.Locale;
 
 
 public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
@@ -44,7 +56,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Initialize context
         mainContext = getActivity();
 
         // Initialize view
@@ -68,11 +80,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
                     @Override
                     public void onDialogResult(boolean result) {
                         if (result) {
-                            LocationTracker locationTracker = new LocationTracker(mainContext);
-                            locationTracker.getLatLng(new LocationTracker.LocationReceivedCallback() {
+                            createNewGatheringAtCurrentLocation(new GatheringCallback() {
                                 @Override
-                                public void onLocationReceived(double latitude, double longitude) {
-                                    addGroupMarker(latitude, longitude, latitude + ":" + longitude);
+                                public void onResult() {
                                     dialog.dismiss();
                                 }
                             });
@@ -115,11 +125,108 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             }
         });
 
-        addGroupMarker(52.04361437713596, 4.539530732068769, "g1");
-        addGroupMarker(52.055279697855504, 4.490693069796051, "g2");
+        // Update gatherings
+        updateGatherings();
     }
 
-    public void addGroupMarker(double latitude, double longitude, String key) {
+    private void updateGatherings() {
+        // Build Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.2.26:8080/gathering/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        // Create gathering repository
+        GatheringRepository gatheringRepository = retrofit.create(GatheringRepository.class);
+
+        // Execute GET request
+        Call<List<Gathering>> call = gatheringRepository.getAllGatherings();
+        call.enqueue(new Callback<List<Gathering>>() {
+            @Override
+            public void onResponse(Call<List<Gathering>> call, Response<List<Gathering>> response) {
+                // Get response
+                Iterable<Gathering> iterable = response.body();
+                assert iterable != null;
+                for (Gathering gathering: iterable) {
+                    // Initialize values
+                    double latitude = gathering.getLatitude();
+                    double longitude = gathering.getLongitude();
+                    String key = gathering.getId().toString();
+
+                    // Add group marker
+                    addGroupMarker(latitude, longitude, key);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Gathering>> call, Throwable t) {
+                System.out.println(">>>>>>>>>>>>>>>>>>>>>> " + t.toString());
+            }
+        });
+    }
+
+    private void createNewGatheringAtCurrentLocation(GatheringCallback gatheringCallback) {
+        LocationTracker locationTracker = new LocationTracker(mainContext);
+        locationTracker.getLatLng(new LocationTracker.LocationReceivedCallback() {
+            @Override
+            public void onLocationReceived(double latitude, double longitude) {
+                String street;
+                String postalCode;
+                String city;
+                String state;
+                String country;
+
+                try {
+                    Geocoder geocoder = new Geocoder(mainContext, Locale.getDefault());
+                    List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+                    street = addresses.get(0).getThoroughfare();
+                    postalCode = addresses.get(0).getPostalCode();
+                    city = addresses.get(0).getLocality();
+                    state = addresses.get(0).getAdminArea();
+                    country = addresses.get(0).getCountryName();
+                } catch (Exception e) {
+                    return;
+                }
+
+                // Build Retrofit
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.2.26:8080/gathering/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+
+                // Create gathering repository
+                GatheringRepository gatheringRepository = retrofit.create(GatheringRepository.class);
+
+                // Execute POST request
+                Call<Gathering> call = gatheringRepository.addGathering(latitude, longitude, street, postalCode, city, state, country);
+                call.enqueue(new Callback<Gathering>() {
+                    @Override
+                    public void onResponse(Call<Gathering> call, Response<Gathering> response) {
+                        // Checks if gathering has been added to database
+                        Gathering gathering = response.body();
+                        assert gathering != null;
+                        if (gathering.getId() == null) {
+                            gatheringCallback.onResult();
+                            return;
+                        }
+
+                        // Add group marker
+                        addGroupMarker(gathering.getLatitude(), gathering.getLongitude(), gathering.getId().toString());
+                        gatheringCallback.onResult();
+                    }
+
+                    @Override
+                    public void onFailure(Call<Gathering> call, Throwable t) {
+                        System.out.println(">>>>>>>>>>>>>>>>>>>>>> " + t.toString());
+                        gatheringCallback.onResult();
+                    }
+                });
+            }
+        });
+    }
+
+    private void addGroupMarker(double latitude, double longitude, String key) {
         // Checks if key already exists
         if (groupMarkerHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key already in use!");
@@ -130,7 +237,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         groupMarkerHashtable.get(key).setMarker();
     }
 
-    public void removeGroupMarker(String key) {
+    private void removeGroupMarker(String key) {
         // Checks if key exists
         if (!groupMarkerHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key not found");
@@ -141,7 +248,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         groupMarkerHashtable.remove(key);
     }
 
-    public void addPersonalMarker(double latitude, double longitude, String key) {
+    private void addPersonalMarker(double latitude, double longitude, String key) {
         // Checks if key already exists
         if (personalMarkerHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key already in use!");
@@ -152,7 +259,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         personalMarkerHashtable.get(key).setMarker();
     }
 
-    public void removePersonalMarker(String key) {
+    private void removePersonalMarker(String key) {
         // Chekcs if key exists
         if (!personalMarkerHashtable.containsKey(key)) {
             System.out.println(">>>>>>>>>>>>>>>>>>>>>> Key not found");
@@ -177,4 +284,8 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         }
         return false;
     }
+}
+
+interface GatheringCallback {
+    void onResult();
 }

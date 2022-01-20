@@ -1,9 +1,11 @@
-package nl.krijnschelvis.place2be.models;
+package nl.krijnschelvis.place2be.ui.main.components;
 
 import android.content.Context;
 import android.widget.Toast;
 
 import nl.krijnschelvis.place2be.R;
+import nl.krijnschelvis.place2be.ui.main.components.MapMarker;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -11,11 +13,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
 
-public class GroupMarker extends MapMarker {
+public class PersonalMarker extends MapMarker {
 
-    private int population = 1;
-
-    public GroupMarker(Context context, GoogleMap googleMap, String key, double latitude, double longitude) {
+    public PersonalMarker(Context context, GoogleMap googleMap, String key, double latitude, double longitude) {
         super(context, googleMap, key, latitude, longitude);
     }
 
@@ -23,15 +23,15 @@ public class GroupMarker extends MapMarker {
     public void setMarker() {
         // Sets correct marker options and adds marker
         IconGenerator iconGen = new IconGenerator(mainContext);
-        iconGen.setBackground(mainContext.getResources().getDrawable(R.drawable.group_marker_background));
-        iconGen.setTextAppearance(R.style.GroupMarkerStyle);
-        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconGen.makeIcon("G")))
+        iconGen.setBackground(mainContext.getResources().getDrawable(R.drawable.personal_marker_background));
+        iconGen.setTextAppearance(R.style.PersonalMarkerStyle);
+        MarkerOptions markerOptions = new MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(iconGen.makeIcon("P")))
                 .position(new LatLng(latitude, longitude)).anchor(iconGen.getAnchorU(), iconGen.getAnchorV());
 
         marker = mMap.addMarker(markerOptions);
         assert marker != null;
         marker.setTitle(key);
-        marker.setTag("GroupMarker");
+        marker.setTag("PersonalMarker");
     }
 
     public void onMarkerClick() {

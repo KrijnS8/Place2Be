@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 getContext();
-                SharedPreferences sp = requireActivity().getSharedPreferences("Login", Context.MODE_PRIVATE);
+                SharedPreferences sp = requireActivity().getSharedPreferences("User", Context.MODE_PRIVATE);
                 SharedPreferences.Editor ed = sp.edit();
 
                 ed.putBoolean("access", false);

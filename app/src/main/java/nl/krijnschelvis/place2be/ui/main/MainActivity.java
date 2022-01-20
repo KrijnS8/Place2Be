@@ -23,6 +23,7 @@ import android.view.WindowManager;
 import nl.krijnschelvis.place2be.R;
 import nl.krijnschelvis.place2be.ui.authentication.SignInActivity;
 import nl.krijnschelvis.place2be.ui.main.fragments.MapFragment;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -75,14 +76,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean requestLoginStatus() {
-        // Opens shared preferences file "Login"
-        SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
+        // Opens shared preferences file "User"
+        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
         SharedPreferences.Editor ed = sp.edit();
 
         // Checks if access already true
         if (!sp.getBoolean("access", false)) {
             ed.putBoolean("access", false);
-            ed.putString("username", null);
+            ed.putString("email", null);
             ed.apply();
             return false;
         }

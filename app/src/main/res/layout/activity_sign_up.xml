@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/dark_lava"
                     android:textSize="30sp"
                     android:textStyle="bold"
@@ -44,7 +44,7 @@
                     android:text="Please enter all fields to continue."/>
 
                 <EditText
-                    android:id="@+id/email_box"
+                    android:id="@+id/sign_up_first_name_box"
                     android:layout_width="250dp"
                     android:layout_height="45dp"
                     android:layout_marginTop="25dp"
@@ -54,7 +54,21 @@
                     android:drawableTint="@color/dark_lava"
                     android:textSize="17sp"
                     android:textColor="@color/dark_lava"
-                    android:hint="Full name"
+                    android:hint="First name"
+                    android:textColorHint="@color/gray" />
+
+                <EditText
+                    android:id="@+id/sign_up_last_name_box"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/login_text_box"
+                    android:drawableLeft="@drawable/profile"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/dark_lava"
+                    android:textSize="17sp"
+                    android:textColor="@color/dark_lava"
+                    android:hint="Last name"
                     android:textColorHint="@color/gray" />
 
                 <EditText
@@ -88,7 +102,7 @@
                     android:textColorHint="@color/gray" />
 
                 <Button
-                    android:id="@+id/sign_in_button"
+                    android:id="@+id/sign_up_button"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"

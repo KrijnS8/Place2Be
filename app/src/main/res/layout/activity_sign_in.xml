@@ -57,6 +57,7 @@
                     android:textSize="17sp"
                     android:textColor="@color/dark_lava"
                     android:hint="@string/email_hint"
+                    android:inputType="textEmailAddress"
                     android:textColorHint="@color/gray" />
 
                 <EditText

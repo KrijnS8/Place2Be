@@ -1,4 +1,4 @@
-package nl.krijnschelvis.place2be.models;
+package nl.krijnschelvis.place2be.ui.main.components;
 
 import android.content.Context;
 

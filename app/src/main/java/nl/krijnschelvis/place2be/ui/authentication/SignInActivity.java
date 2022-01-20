@@ -12,15 +12,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import nl.krijnschelvis.place2be.R;
+import nl.krijnschelvis.place2be.network.repositories.UserRepository;
+import nl.krijnschelvis.place2be.network.models.User;
 import nl.krijnschelvis.place2be.ui.main.MainActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignInActivity extends Activity {
 
-    private EditText email;
-    private EditText password;
+    private EditText emailBox;
+    private EditText passwordBox;
     private Button signInButton;
     private TextView signUpText;
 
@@ -33,27 +41,66 @@ public class SignInActivity extends Activity {
         w.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_sign_in);
 
-        email = (EditText) findViewById(R.id.email_box);
-        password = (EditText) findViewById(R.id.password_box);
+        // Initialize emailBox and passwordBox
+        emailBox = (EditText) findViewById(R.id.email_box);
+        passwordBox = (EditText) findViewById(R.id.password_box);
 
+        // Initialize signInButton
         signInButton = (Button) findViewById(R.id.sign_in_button);
         signInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (email.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
-                    SharedPreferences sp = getSharedPreferences("Login", MODE_PRIVATE);
-                    SharedPreferences.Editor ed = sp.edit();
+                // Retrieve data from text boxes
+                String email = emailBox.getText().toString();
+                String password = passwordBox.getText().toString();
 
-                    ed.putBoolean("access", true);
-                    ed.apply();
+                // Build Retrofit
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://192.168.2.26:8080/authentication/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
+                // Create user repository
+                UserRepository userRepository = retrofit.create(UserRepository.class);
+
+                // Execute GET request
+                Call<User> call = userRepository.getUser(email, password);
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                        // Get user model
+                        User user = response.body();
+
+                        // Checks for validity
+                        assert user != null;
+                        if (user.getEmail() == null) {
+                            return;
+                        }
+
+                        // Opens shared preferences file "User"
+                        SharedPreferences sp = getSharedPreferences("User", MODE_PRIVATE);
+                        SharedPreferences.Editor ed = sp.edit();
+
+                        // Set access to true and email to inputted email
+                        ed.putBoolean("access", true);
+                        ed.putString("email", user.getEmail());
+                        ed.apply();
+
+                        // Starts MainActivity
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        System.out.println(">>>>>>>>>>>>>>>>>>>>>> " + t.toString());
+                    }
+                });
             }
         });
 
+        // Initialize signUpText
         signUpText = (TextView) findViewById(R.id.sign_up_text);
         signUpText.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
